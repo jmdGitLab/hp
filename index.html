@@ -182,9 +182,41 @@
     </div>
 </body>
 
-<script>
+<script >
+function dateFormat(d){
+	console.log('dt in ' + d);
+	d = d.replace('Date(','').replace(')','');
+	d = d.split(',');
+	
+	var day = d[1] + 1;
+	day += '';
+	
+	const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+	const options = {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		timeZone: userTimeZone // Explicitly use the detected time zone
+	};
+		
+	d = new Date(d[0] + "-" + day.padStart(2, "0") + "-" + d[2].padStart(2, "0") 
+	+ "T" + d[3].padStart(2, "0") + ":" + d[4].padStart(2, "0") + ":00");
+	
+	//console.log("date n type = " + d.getTime() + d);
+	const formattedDate = d.toLocaleString(undefined, options);
+
+	obj = {
+		"dt": d
+		,"dtStr": formattedDate
+	};
+	
+	return obj;
+}
+
 function cleanVal(val){
-	//console.log("val = " + val);
 	return (val == 'undefined' || val == 'null')?null:val;
 }
 
@@ -197,42 +229,17 @@ function loadEvents(response) {
     const li = document.createElement("li");
 	var   evt = `${r.c[0]?.v}`
 		, org = cleanVal(`${r.c[1]?.v}`)
-		, dt  = cleanVal(`${r.c[2]?.v}`)
+		, dt  = dateFormat(cleanVal(`${r.c[2]?.v}`))
 		, loc = cleanVal(`${r.c[3]?.v}`)
 		, map = cleanVal(`${r.c[4]?.v}`)
 		, url = cleanVal(`${r.c[5]?.v}`)
 		, descr = cleanVal(`${r.c[6]?.v}`);
 	
-	//console.log((!org)?"":"org1 - " + org );
 	if (!evt || evt=="event") {return;}
+	if (dt.dt <= new Date()) {return;}
+
+	dt = dt.dtStr;
 	
-	
-  //dt = dt.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)\)/);
-  //const [, year, month, day, hour, minute] = match.map(Number);
-
-  // IMPORTANT: month is already zero-based in GViz
-  //dt = new Date(year, month, day, hour, minute);
-  /*
-  const options = {
-    weekday: 'long',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit'
-  };
-*/
-
-	//dt = eval(String(dt).toString());
-	//dt = new Date(dt);
-	/*
-	var year = dt.getFullYear();
-	var month = (dt.getMonth() + 1).toString().padStart(2, '0'); // Pad with '0' if needed
-	var day = dt.getDate().toString().padStart(2, '0'); // Pad with '0' if needed
-
-	dt = `${year}-${month}-${day}`;
-*/
-//console.log("org1 - " + org );
-
     li.innerHTML = "<div class='info-card'><h2><strong>" + evt + "</strong> — </h2>" 
 		+ "<div>📅 " + dt + "</div>"
 		+ ((!org)?"":"<div>" + org + "</div>")
@@ -247,11 +254,10 @@ function loadEvents(response) {
 
 <script src="https://docs.google.com/spreadsheets/d/16pYiPnCnnfb0y5n-xYh0Souj8e-hn455pyXatseGSZs/gviz/tq?
 tqx=responseHandler:loadEvents
-&tq=select%20A,B,C,D,E,F,G%20ORDER%20BY%20C%20DESC"></script>
+&gid=674921719
+&tq=select%20A,B,C,D,E,F,G%20ORDER%20BY%20C%20ASC"></script>
 
 </html>
-
-
 
 
 
