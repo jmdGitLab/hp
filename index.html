@@ -165,12 +165,7 @@
 				<ul id="events"></ul>
             </div>
         </div>
-<!--
-        <div class="section">
-            <h2>Why We March</h2>
-            <p style="font-size: 1.15em; line-height: 1.8;">We believe in the power of community action to create positive change. When Houstonians come together in the streets, our voices unite to demand justice, equality, and a brighter future for all. Every march is a celebration of our collective strength and shared values.</p>
-        </div>
--->
+
         <div class="section">
             <h2>List a Protest</h2>
             <p style="font-size: 1.15em; line-height: 1.8;">Submit your protest to <strong style="color: #4a90a4;">houstonprotests@gmail.com</strong></p>
@@ -190,15 +185,17 @@ function loadEvents(response) {
 
   rows.forEach(r => {
     const li = document.createElement("li");
-	var evt = `${r.c[0]?.v}`
-		, dt = `${r.c[1]?.v}`
-		, loc = `${r.c[2]?.v}`
-		, map = `${r.c[3]?.v}`
-		, url = `${r.c[4]?.v}`
-		, desc = `${r.c[5]?.v}`;
+	var evt   = `${r.c[0]?.v}`
+		, org = `${r.c[1]?.v}`
+		, dt  = `${r.c[2]?.v}`
+		, loc = `${r.c[3]?.v}`
+		, map = `${r.c[4]?.v}`
+		, url = `${r.c[5]?.v}`
+		, descr = `${r.c[6]?.v}`;
 	
 	console.log("evt- " + evt);
 	if (!evt || evt=="event") {return;}
+
   //dt = dt.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)\)/);
   //const [, year, month, day, hour, minute] = match.map(Number);
 
@@ -225,9 +222,10 @@ function loadEvents(response) {
 */
     li.innerHTML = "<div class='info-card'><h2><strong>" + evt + "</strong> — </h2>" 
 		+ "<div>📅 " + dt + "</div>"
+		//+ ((org==null)?"":"<div>" + org + "</div>")
 		+ "<h5>📍  <a target='_blank' href='" + map + "'>" + loc + "</a></h5>"
-		+ "<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>"
-		+ "<p>" + desc + "</p>"
+		+ "<div>🎯 " +org+"<a target='_blank' href='" + url + "'>Join this action!</a></div>"
+		+ "<p>" + descr + "</p>"
 		+ "</div>";
     list.appendChild(li);
   });
@@ -236,10 +234,9 @@ function loadEvents(response) {
 
 <script src="https://docs.google.com/spreadsheets/d/16pYiPnCnnfb0y5n-xYh0Souj8e-hn455pyXatseGSZs/gviz/tq?
 tqx=responseHandler:loadEvents
-&tq=select%20A,B,C,D,E,F%20ORDER%20BY%20B%20DESC"></script>
+&tq=select%20A,B,C,D,E,F,G%20ORDER%20BY%20C%20DESC"></script>
 
 </html>
-
 
 
 
