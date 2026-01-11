@@ -193,7 +193,7 @@ function loadEvents(response) {
 		, url = `${r.c[5]?.v}`
 		, descr = `${r.c[6]?.v}`;
 	
-	console.log("evt- " + evt);
+	console.log("org- " + org);
 	if (!evt || evt=="event") {return;}
 
   //dt = dt.match(/Date\((\d+),(\d+),(\d+),(\d+),(\d+)\)/);
@@ -222,10 +222,10 @@ function loadEvents(response) {
 */
     li.innerHTML = "<div class='info-card'><h2><strong>" + evt + "</strong> — </h2>" 
 		+ "<div>📅 " + dt + "</div>"
-		//+ ((org==null)?"":"<div>" + org + "</div>")
+		+ ((!org || org == 'undefined')?"":"<div>" + org + "</div>")
 		+ "<h5>📍  <a target='_blank' href='" + map + "'>" + loc + "</a></h5>"
-		+ "<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>"
-		+ "<p>" + descr + "</p>"
+		+ ((!url || url == 'undefined')?"":"<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>")
+		+ ((!descr || descr == 'undefined')?"":"<p>" + descr + "</p>")
 		+ "</div>";
     list.appendChild(li);
   });
@@ -237,3 +237,6 @@ tqx=responseHandler:loadEvents
 &tq=select%20A,B,C,D,E,F,G%20ORDER%20BY%20C%20DESC"></script>
 
 </html>
+
+
+
