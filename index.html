@@ -222,10 +222,10 @@ function loadEvents(response) {
 */
     li.innerHTML = "<div class='info-card'><h2><strong>" + evt + "</strong> — </h2>" 
 		+ "<div>📅 " + dt + "</div>"
-		+ ((!org || org == 'undefined')?"":"<div>" + org + "</div>")
+		+ ((!org || org == 'undefined' || org == 'null')?"":"<div>" + org + "</div>")
 		+ "<h5>📍  <a target='_blank' href='" + map + "'>" + loc + "</a></h5>"
-		+ ((!url || url == 'undefined')?"":"<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>")
-		+ ((!descr || descr == 'undefined')?"":"<p>" + descr + "</p>")
+		+ ((!url || url == 'undefined' || url == 'null')?"":"<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>")
+		+ ((!descr || descr == 'undefined' || descr == 'null')?"":"<p>" + descr + "</p>")
 		+ "</div>";
     list.appendChild(li);
   });
@@ -237,6 +237,3 @@ tqx=responseHandler:loadEvents
 &tq=select%20A,B,C,D,E,F,G%20ORDER%20BY%20C%20DESC"></script>
 
 </html>
-
-
-
