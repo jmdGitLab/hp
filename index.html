@@ -243,7 +243,7 @@ function loadEvents(response) {
     li.innerHTML = "<div class='info-card'><h2><strong>" + evt + "</strong> — </h2>" 
 		+ "<div>📅 " + dt + "</div>"
 		+ ((!org)?"":"<div>" + org + "</div>")
-		+ "<h5>📍 <a target='_blank' href='" + map + "'>" + loc + "</a></h5>"
+		+ "<h4>📍 <a target='_blank' href='" + map + "'>" + loc + "</a></h4>"
 		+ ((!url)?"":"<div>🎯 <a target='_blank' href='" + url + "'>Join this action!</a></div>")
 		+ ((!descr)?"":"<p class='descr'>" + descr + "</p>")
 		+ "</div>";
